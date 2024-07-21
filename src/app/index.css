@@ -1,0 +1,97 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+h1 {
+    font-size: 48px;
+    font-weight: bold;
+}
+
+h2 {
+    font-size: 32px;
+    font-weight: bold;
+}
+
+h3 {
+    font-size: 28px;
+    font-weight: bold;
+}
+
+h4 {
+    font-size: 24px;
+    font-weight: bold;
+}
+
+h5 {
+    font-size: 20px;
+    font-weight: bold;
+}
+
+h6 {
+    font-size: 16px;
+    font-weight: bold;
+}
+
+.registration-input {
+    max-width: 388px;
+    position: relative;
+    width: 100%;
+}
+
+.registration-input__element {
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    border: 1px solid #1a202c;
+    border-radius: 12px;
+    color: #502314;
+    display: block;
+    height: 100%;
+    line-height: 1.19;
+    outline: none;
+    padding: 14px 12px 15px;
+    width: 100%;
+}
+.registration-input__element:focus {
+    border-color: #F06D00;
+}
+
+.registration-input__placeholder,
+.registration-input__placeholder_focused {
+    background-color: #fff;
+    border-radius: 8px;
+    left: 12px;
+    padding: 4px;
+    pointer-events: none;
+    position: absolute;
+    text-align: left;
+    top: calc(50% - 20px);
+    transition: all .5s;
+    white-space: nowrap;
+}
+
+.registration-input__element:focus+.registration-input__placeholder,
+.registration-input__placeholder_focused {
+    color: #302E2E;
+    font-size: 18px;
+    left: 12px;
+    line-height: 1.2;
+    top: -11px;
+}
+
+.green-button {
+    background: #4A914C;
+    border: 2px #4A914C solid;
+    border-radius: 20px;
+    padding: 10px 30px;
+    width: 75%;
+}
+.green-button > span {
+    color: #fff;
+}
+.green-button:hover {
+    background: #fff;
+}
+.green-button:hover > span {
+    color: #4A914C;
+}
