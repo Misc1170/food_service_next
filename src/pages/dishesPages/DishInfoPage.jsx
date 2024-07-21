@@ -1,4 +1,3 @@
-import {useParams} from "react-router-dom";
 import {useContext, useEffect, useState} from "react";
 import axios from "axios";
 import FullRoundedFrame from "../../components/Frames/FullRoundedFrame.jsx";
