@@ -16,15 +16,15 @@ export default function RootLayout({ children }) {
   return (
     <html lang="en">
       <body className={inter.className}>
-      <div id="modal-root"></div>
+        <div id="modal-root"></div>
         <CartProvider>
-        <ModalProvider >
-        <Navbar />
-        {children}
-        <Footer />
-        </ModalProvider>
+          <ModalProvider>
+            <Navbar />
+            <div className="container mx-auto">{children}</div>
+            <Footer />
+          </ModalProvider>
         </CartProvider>
-        </body>
+      </body>
     </html>
   );
 }

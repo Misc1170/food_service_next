@@ -1,4 +1,5 @@
-import {useParams} from "react-router-dom";
+'use client'
+
 import axios from "axios";
 import {useContext, useEffect, useState} from "react";
 import PageTitleName from "@/components/Text/PageTitleName.jsx";

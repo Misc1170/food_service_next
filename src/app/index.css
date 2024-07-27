@@ -95,3 +95,13 @@ h6 {
 .green-button:hover > span {
     color: #4A914C;
 }
+
+.navbar-link {
+    padding: 10px;
+    color: white;
+    font-size: 20px;
+}
+.navbar-link.active {
+    border: 2px solid white;
+    border-radius: 30px;
+}

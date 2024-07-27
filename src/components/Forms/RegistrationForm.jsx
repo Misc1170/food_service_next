@@ -32,6 +32,7 @@ export default function RegistrationForm() {
         setErrors(registrationFormValidation(formData))
 
         if (errors.isSuccess) {
+            
             axios.post('http://localhost:8000/api/registration', formData)
                 .then(response => {
                     console.log(response.data)
@@ -41,8 +42,6 @@ export default function RegistrationForm() {
                     setIsRegistrationSuccess(false)
                     console.log(error.response.data)
                 });
-            // setUser(userData);
-            // setIsRegistrationSuccess(true)
         }
     }
 
