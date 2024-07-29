@@ -1,4 +1,4 @@
-'use client'
+"use client";
 
 import GreenButton from "@/components/Buttons/GreenButton.jsx";
 import PageTitleName from "@/components/Text/PageTitleName.jsx";
@@ -9,13 +9,13 @@ import SpanLg from "@/components/Text/SpanTags/SpanLg.jsx";
 import { ModalContext } from "@/contexts/modal.jsx";
 import RegistrationForm from "@/components/Forms/RegistrationForm.jsx";
 import ForgetPasswordForm from "@/components/Forms/ForgetPasswordForm.jsx";
-import axios from "axios";
 
 export default function LoginForm() {
   const { handleModal } = useContext(ModalContext);
 
   const [formData, setFormData] = useState({});
   const [errors, setErrors] = useState({});
+  const [user, setUser] = useState([]);
 
   const inputHandleChange = (item) => {
     const name = item.name;
@@ -28,19 +28,23 @@ export default function LoginForm() {
 
     setErrors(loginFormValidation(formData));
 
-    console.log(formData);
-    console.log(import.meta.env.REACT_APP_BACKEND_URL + "/api/login");
+    console.log("form-data", formData);
     if (!errors.isSuccess) {
-      axios
-        .post(import.meta.env.REACT_APP_BACKEND_URL + "/api/login", formData)
-        .then((response) => {
-          console.log(response.data);
-        })
-        .catch((error) => {
-          console.log(error.response.data);
+      fetch("http://127.0.0.1:8000/api/login", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: formData,
+      })
+        .then((res) => res.json())
+        .then((data) => {
+          console.log("data", data);
+          setUser(data);
         });
-      console.log(formData);
     }
+
+    console.log("user-data", user);
   };
 
   return (
