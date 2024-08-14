@@ -9,7 +9,6 @@ import GreenButton from "@/components/Buttons/GreenButton.jsx";
 import { CartContext } from "@/contexts/cart.jsx";
 import Image from "next/image.js";
 
-
 export default function DishesListPage({ params }) {
   const [dishes, setDishes] = useState([]);
   useEffect(() => {
@@ -19,8 +18,6 @@ export default function DishesListPage({ params }) {
         setDishes(Object.values(data)[0]);
       });
   }, [params.purposeId]);
-
-  console.log(dishes);
 
   const { handleModal } = useContext(ModalContext);
   const { addToCart } = useContext(CartContext);
@@ -34,13 +31,13 @@ export default function DishesListPage({ params }) {
             <div
               key={index}
               className={
-                "flex flex-col gap-y-6 border-4 border-D9D9D9 p-6 bg-D9D9D9 rounded-2xl hover:border-white"
+                "flex flex-col items-center gap-y-6 border-4 border-D9D9D9 p-6 bg-D9D9D9 rounded-2xl hover:border-white"
               }
             >
               <Image
                 width={200}
                 height={200}
-                src={"/images/dishes/" + dish.img_name}
+                src={`/images/dishes/${dish.img_name}`}
                 alt=""
               />
               <h4 className={"text-center"}>{dish.name}</h4>

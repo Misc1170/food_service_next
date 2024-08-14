@@ -1,17 +1,28 @@
 "use client";
 
-import { createContext, useState, useEffect } from "react";
+import { createContext, useState, useEffect, useRef } from "react";
 
 export const CartContext = createContext();
 
 export const CartProvider = ({ children }) => {
+  const initialRender = useRef(true);
   const [cartItems, setCartItems] = useState([]);
+
   useEffect(() => {
     const localstorage = localStorage.getItem("cartItems")
       ? JSON.parse(localStorage.getItem("cartItems"))
       : [];
     setCartItems(localstorage);
+    console.log("useEffect1-2", localstorage);
   }, []);
+
+  useEffect(() => {
+    if (initialRender.current) {
+      initialRender.current = false;
+      return;
+    }
+    localStorage.setItem("cartItems", JSON.stringify(cartItems));
+  }, [cartItems]);
 
   const addToCart = (item) => {
     const isItemInCart = cartItems.find(
@@ -29,6 +40,7 @@ export const CartProvider = ({ children }) => {
     } else {
       setCartItems([...cartItems, { ...item, quantity: 1 }]);
     }
+    console.log("addToCart", item);
   };
 
   const removeFromCart = (item) => {
@@ -75,17 +87,6 @@ export const CartProvider = ({ children }) => {
       0
     );
   };
-
-  useEffect(() => {
-    localStorage.setItem("cartItems", JSON.stringify(cartItems));
-  }, [cartItems]);
-
-  useEffect(() => {
-    const cartItems = localStorage.getItem("cartItems");
-    if (cartItems) {
-      setCartItems(JSON.parse(cartItems));
-    }
-  }, []);
 
   return (
     <CartContext.Provider

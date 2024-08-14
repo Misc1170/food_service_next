@@ -1,5 +1,4 @@
-import vkIcon from '@icons/vk.svg'
-import telegramIcon from '@icons/telegram.svg'
+import Image from 'next/image'
 
 export default function Footer() {
     return (
@@ -16,9 +15,8 @@ export default function Footer() {
                     <span>eda@mail.ru</span>
                 </div>
                 <div className="flex gap-x-4">
-                    {/*<img src={ require('/icons/vk.svg') } alt=""/>*/}
-                    <img src={ vkIcon } alt=""/>
-                    <img src={ telegramIcon } alt=""/>
+                    <Image width={40} height={40} src={ '/icons/vk.svg' } alt=""/>
+                    <Image width={40} height={40} src={'/icons/telegram.svg'} alt=""/>
                 </div>
             </div>
 

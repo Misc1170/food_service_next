@@ -10,10 +10,11 @@ export default function AuthActions() {
   return (
     <>
       <div className={"flex flex-col gap-y-6 text-white"}>
-        <SpanXl className={"text-nowrap"}>Вы неавторизованный гость</SpanXl>
-        <button onClick={() => handleModal(<LoginForm />)}>
+        <SpanXl className={"text-nowrap"}>Личный кабинет в разработке</SpanXl>
+        {/* <SpanXl className={"text-nowrap"}>Вы неавторизованный гость</SpanXl> */}
+        {/* <button onClick={() => handleModal(<LoginForm />)}>
           <SpanLg>Войти</SpanLg>
-        </button>
+        </button> */}
       </div>
     </>
   );
