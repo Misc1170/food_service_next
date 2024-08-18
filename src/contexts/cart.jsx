@@ -12,8 +12,6 @@ export const CartProvider = ({ children }) => {
     const localstorage = localStorage.getItem("cartItems")
       ? JSON.parse(localStorage.getItem("cartItems"))
       : [];
-    setCartItems(localstorage);
-    console.log("useEffect1-2", localstorage);
   }, []);
 
   useEffect(() => {
