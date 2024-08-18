@@ -86,9 +86,6 @@ h6 {
     padding: 10px 30px;
     width: 75%;
 }
-.green-button > span {
-    color: #fff;
-}
 .green-button:hover {
     background: #fff;
 }

@@ -12,6 +12,8 @@ export const CartProvider = ({ children }) => {
     const localstorage = localStorage.getItem("cartItems")
       ? JSON.parse(localStorage.getItem("cartItems"))
       : [];
+
+      console.log('use effect 1 ', localstorage)
   }, []);
 
   useEffect(() => {
@@ -20,6 +22,7 @@ export const CartProvider = ({ children }) => {
       return;
     }
     localStorage.setItem("cartItems", JSON.stringify(cartItems));
+    console.log('use effect 2 ', cartItems)
   }, [cartItems]);
 
   const addToCart = (item) => {
