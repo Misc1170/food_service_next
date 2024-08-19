@@ -6,8 +6,8 @@ import PriceWithRubleSymbol from "@/components/Text/PriceWithRubleSymbol.jsx";
 import { ModalContext } from "@/contexts/modal.jsx";
 import DishInfoPage from "../../../pages/dishesPages/DishInfoPage.jsx";
 import GreenButton from "@/components/Buttons/GreenButton.jsx";
-import { CartContext } from "@/contexts/cart.jsx";
 import Image from "next/image.js";
+import AddToCartButton from "@/components/Buttons/AddToCartButton.jsx";
 
 export default function DishesListPage({ params }) {
   const [dishes, setDishes] = useState([]);
@@ -20,7 +20,6 @@ export default function DishesListPage({ params }) {
   }, [params.purposeId]);
 
   const { handleModal } = useContext(ModalContext);
-  const { addToCart } = useContext(CartContext);
 
   return (
     <>
@@ -43,15 +42,13 @@ export default function DishesListPage({ params }) {
               <h4 className={"text-center"}>{dish.name}</h4>
               <div className={"flex justify-between"}>
                 <PriceWithRubleSymbol priceSell={dish.price_sell} />
-                <GreenButton clickHandle={() => addToCart(dish)}>
-                  В корзину
-                </GreenButton>
+                <AddToCartButton propItem={dish} />
                 <GreenButton
                   clickHandle={() =>
                     handleModal(<DishInfoPage dishId={dish.dish_id} />)
                   }
                 >
-                  Подробнее
+                  Подробнееqwe
                 </GreenButton>
               </div>
             </div>

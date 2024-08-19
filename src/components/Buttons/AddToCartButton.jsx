@@ -1,12 +1,26 @@
-import {CartContext} from "../../contexts/cart.jsx";
-import {useContext} from "react";
+"use client";
 
-export default function AddToCartButton({item}) {
-    const {addToCart} = useContext(CartContext);
-    return (
-        <div>
-            <button onClick={() => addToCart(item)}
-                    className={"py-2 px-6 bg-4A914C border-2 border-4A914C rounded-2xl text-xl font-bold hover:bg-white hover:text-4A914C"}>В Корзину</button>
-        </div>
-    )
+import { CartContext } from "@contexts/cart.jsx";
+import { useContext } from "react";
+import GreenButton from "./GreenButton.jsx";
+import { ModalContext } from "@/contexts/modal.jsx";
+
+export default function AddToCartButton({propItem}) {
+  const { getDelieveryAddress } = useContext(DelieveryAddressContext);
+  const { handleModal } = useContext(ModalContext);
+  const { addToCart } = useContext(CartContext);
+
+  const addItemToCart = () => {
+      addToCart(propItem);
+
+    // const delieveryAddress = getDelieveryAddress();
+    console.log("propItem", propItem);
+    // console.log("delieveryAddress", delieveryAddress);
+
+    if (!delieveryAddress) {
+        handleModal(<div>qwe</div>)
+    }
+  };
+
+  return <GreenButton clickHandle={() => addItemToCart()}>В корзину</GreenButton>;
 }

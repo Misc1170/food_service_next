@@ -15,17 +15,22 @@ export default function DishInfoPage({ dishId }) {
 
   useEffect(() => {
     fetch(`http://127.0.0.1:8000/api/dish/${dishId}`)
-    .then((res) => res.json())
-    .then((data) => {
-      setDish(Object.values(data)[0]);
-    });
-  }, [])
+      .then((res) => res.json())
+      .then((data) => {
+        setDish(Object.values(data)[0]);
+      });
+  }, []);
 
   return (
     <div className={"grid grid-cols-2 gap-x-12"}>
       <div className={"col-span-1"}>
         <div className={"mb-6 flex justify-center"}>
-          <Image width={500} height={500} src={`/images/dishes/${dish.img_name}`} alt="" />
+          <Image
+            width={500}
+            height={500}
+            src={`/images/dishes/${dish.img_name}`}
+            alt=""
+          />
         </div>
         <div className={"border-5 border-D9D9D9 rounded-2xl p-6"}>
           <h4 className={"mb-3"}>Описание</h4>
@@ -47,7 +52,11 @@ export default function DishInfoPage({ dishId }) {
             >
               <strong>Состав: </strong>
               {dish.products?.map((product, index) => {
-                return <li key={index} className={"lowercase"}>{product.name},</li>;
+                return (
+                  <li key={index} className={"lowercase"}>
+                    {product.name},
+                  </li>
+                );
               })}
               <br />
               <br />
@@ -83,9 +92,7 @@ export default function DishInfoPage({ dishId }) {
         </div>
         <div className={"flex justify-between"}>
           <PriceWithRubleSymbol priceSell={dish.price_sell} />
-          <GreenButton clickHandle={() => addToCart(dish)}>
-            Добавить в корзину
-          </GreenButton>
+          <AddToCartButton />
         </div>
       </div>
     </div>

@@ -13,7 +13,7 @@ export const CartProvider = ({ children }) => {
       ? JSON.parse(localStorage.getItem("cartItems"))
       : [];
 
-      console.log('use effect 1 ', localstorage)
+    setCartItems(localstorage);
   }, []);
 
   useEffect(() => {
@@ -22,7 +22,6 @@ export const CartProvider = ({ children }) => {
       return;
     }
     localStorage.setItem("cartItems", JSON.stringify(cartItems));
-    console.log("use effect 2 ", cartItems);
   }, [cartItems]);
 
   const addToCart = (item) => {
@@ -41,11 +40,9 @@ export const CartProvider = ({ children }) => {
     } else {
       setCartItems([...cartItems, { ...item, quantity: 1 }]);
     }
-    console.log("addToCart", item);
   };
 
   const removeFromCart = (item) => {
-    console.log(item);
     const isItemInCart = cartItems.find(
       (cartItem) => cartItem.dish_id === item.dish_id
     );
