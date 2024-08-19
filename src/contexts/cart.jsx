@@ -22,7 +22,7 @@ export const CartProvider = ({ children }) => {
       return;
     }
     localStorage.setItem("cartItems", JSON.stringify(cartItems));
-    console.log('use effect 2 ', cartItems)
+    console.log("use effect 2 ", cartItems);
   }, [cartItems]);
 
   const addToCart = (item) => {
