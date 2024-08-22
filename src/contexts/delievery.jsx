@@ -8,32 +8,25 @@ export const DelieveryAddressProvider = ({ children }) => {
   const [delieveryAddress, setDelieveryAddress] = useState({});
 
   useEffect(() => {
-    const localStorage = localStorage.getItem("delieveryAddress")
+    const localstorage = localStorage.getItem("delieveryAddress")
       ? JSON.parse(localStorage.getItem("delieveryAddress"))
       : {};
 
-    setDelieveryAddress(localStorage);
+    setDelieveryAddress(localstorage);
   }, []);
 
-  //   useEffect(() => {
-  //     if (initialRender.current) {
-  //       initialRender.current = false;
-  //       return;
-  //     }
-  //     localStorage.setItem("delieveryAddress", JSON.stringify(delieveryAddress));
-  //   }, [delieveryAddress]);
-
-  //   const addDelieveryAddress = (item) => {
-  //     setDelieveryAddress(item);
-  //   };
+  const set = (formData) => {
+    localStorage.setItem("delieveryAddress", JSON.stringify(formData));
+    setDelieveryAddress(formData);
+  }
 
   const getDelieveryAddress = () => {
-    console.log("delievery context");
+    console.log('getDelievery', delieveryAddress)
     return delieveryAddress;
   };
 
   return (
-    <DelieveryAddressContext.Provider value={{ getDelieveryAddress }}>
+    <DelieveryAddressContext.Provider value={{ getDelieveryAddress, set }}>
       {children}
     </DelieveryAddressContext.Provider>
   );

@@ -9,11 +9,11 @@ import ThreeSideRoundedFrame from "@components/Frames/ThreeSideRoundedFrame.jsx"
 import SpanXxl from "@/components/Text/SpanTags/SpanXxl.jsx";
 import GreenButton from "@components/Buttons/GreenButton.jsx";
 import Link from "next/link";
-import { ModalContext } from "@/contexts/modal";
-import DelieveryAddress from "@/components/Forms/DelieveryAddress";
 import Image from "next/image";
+import PayButton from "@/components/Buttons/PayButton";
+import DelieveryAddressComponent from "@/components/DelieveryAddressComponent";
 
-function CartPage() {
+export default function CartPage() {
   const {
     cartItems,
     addToCart,
@@ -22,17 +22,14 @@ function CartPage() {
     getCartTotal,
     removeFromCart,
   } = useContext(CartContext);
-  const { handleModal } = useContext(ModalContext);
 
   return (
     <>
       {cartItems.length > 0 ? (
         <>
+          <PageTitleName >Корзина</PageTitleName>
           <div className={"flex justify-between"}>
-            <PageTitleName titleName={"Корзина"} />
-            <GreenButton clickHandle={() => handleModal(<DelieveryAddress />)}>
-              Выбрать адрес доставки
-            </GreenButton>
+            <DelieveryAddressComponent />
             <button
               className={
                 "py-2 px-6 bg-F06D00 border-2 border-F06D00 rounded-2xl text-xl font-bold hover:bg-white hover:text-F06D00"
@@ -101,7 +98,7 @@ function CartPage() {
             <SpanXxl>Итого: </SpanXxl>
             <PriceWithRubleSymbol priceSell={getCartTotal()} />
           </div>
-          <GreenButton clickHandle={() => alert(123)}>Оплатить</GreenButton>
+          <PayButton />
         </>
       ) : (
         <>
@@ -117,5 +114,3 @@ function CartPage() {
     </>
   );
 }
-
-export default CartPage;

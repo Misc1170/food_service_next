@@ -1,6 +1,6 @@
-import {useState} from "react";
+import { useState } from "react";
 
-export default function RegistrationInput(props) {
+export default function RegistrationInput({ inputName, onChange, children, type, isRequired = true, error }) {
     const [isKeepFocusState, setIsKeepFocusState] = useState(false);
 
     const toggleFocusInput = (item) => {
@@ -10,20 +10,24 @@ export default function RegistrationInput(props) {
             setIsKeepFocusState(false)
         }
 
-        props.onChange(item.target)
+        onChange(item.target)
     }
 
     return (
-            <label className={"registration-input"}>
-                <input name={props.inputName} onChange={(item) => toggleFocusInput(item)} type="text"
-                       className={"registration-input__element"}/>
-                <div
-                    className={isKeepFocusState ? 'registration-input__placeholder_focused' : "registration-input__placeholder"}>{props.children}</div>
-            {/*{props.error &&*/}
+        <label className={"registration-input"}>
+            <input className={"registration-input__element"}
+                type={type}
+                required={isRequired}
+                name={inputName}
+                onChange={(item) => toggleFocusInput(item)}
+            />
+            <div
+                className={isKeepFocusState ? 'registration-input__placeholder_focused' : "registration-input__placeholder"}>{children}</div>
+            {/*{error &&*/}
             {/*    <span className="error-message">*/}
-            {/*                {props.error}*/}
+            {/*                {error}*/}
             {/*            </span>*/}
             {/*}*/}
-            </label>
+        </label>
     )
 }

@@ -32,6 +32,18 @@ h6 {
     font-weight: bold;
 }
 
+/* Chrome, Safari, Edge, Opera */
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+/* Firefox */
+input[type=number] {
+  -moz-appearance: textfield;
+}
+
 .registration-input {
     max-width: 388px;
     position: relative;
@@ -72,7 +84,7 @@ h6 {
 
 .registration-input__element:focus+.registration-input__placeholder,
 .registration-input__placeholder_focused {
-    color: #302E2E;
+    color: green;
     font-size: 18px;
     left: 12px;
     line-height: 1.2;
