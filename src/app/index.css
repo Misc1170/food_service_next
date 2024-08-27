@@ -104,6 +104,13 @@ input[type=number] {
 .green-button:hover > span {
     color: #4A914C;
 }
+.green-button.active {
+    background: red;
+    border: 2px #4A914C solid;
+    border-radius: 20px;
+    padding: 10px 30px;
+    width: 75%;
+}
 
 .navbar-link {
     padding: 10px;

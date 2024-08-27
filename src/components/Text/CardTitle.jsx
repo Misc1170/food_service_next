@@ -1,5 +1,5 @@
-export default function CardTitle({title}) {
+export default function CardTitle({children}) {
     return (
-        <h4 className="uppercase font-bold text-black">{title}</h4>
+        <h4 className="uppercase font-bold text-black">{children}</h4>
     )
 }

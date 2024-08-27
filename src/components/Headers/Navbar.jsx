@@ -48,9 +48,9 @@ export default function Navbar() {
         <NavLinksWrapper className="flex gap-x-4">
           <Link
             className={`navbar-link ${
-              pathName === "/purposes" ? "active" : ""
+              pathName === "/dishes" ? "active" : ""
             }`}
-            href="/purposes"
+            href="/dishes"
           >
             Блюда
           </Link>
