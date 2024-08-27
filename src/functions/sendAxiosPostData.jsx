@@ -1,4 +1,3 @@
-import axios from "axios";
 
 export default function sendAxiosPostData(url, data) {
     // let responseData = {data: {}, error: {}};

@@ -54,12 +54,12 @@ export default function Navbar() {
           >
             Блюда
           </Link>
-          {/* <Link
-            className={`navbar-link ${pathName === "/reviews" ? "active" : ""}`}
-            href="/reviews"
+          <Link
+            className={`navbar-link ${pathName === "/sets" ? "active" : ""}`}
+            href="/sets"
           >
-            Отзывы и предложения
-          </Link> */}
+            Наборы готовых блюд
+          </Link>
         </NavLinksWrapper>
 
         <NavLinksWrapper className={"relative"}>

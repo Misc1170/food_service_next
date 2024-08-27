@@ -10,7 +10,6 @@ import {ModalContext} from "@/contexts/modal.jsx";
 import AlertReviewModalWindow from "@/components/ModalWindows/AlertReviewModalWindow.jsx";
 import AlertPopUp from "@/components/Alerts/AlertPopUp.jsx";
 import SuccessRegistration from "@/components/PopUps/SuccessRegistration.jsx";
-import axios from "axios";
 
 export default function RegistrationForm() {
 

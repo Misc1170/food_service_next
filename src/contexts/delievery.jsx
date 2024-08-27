@@ -21,7 +21,6 @@ export const DelieveryAddressProvider = ({ children }) => {
   }
 
   const getDelieveryAddress = () => {
-    console.log('getDelievery', delieveryAddress)
     return delieveryAddress;
   };
 

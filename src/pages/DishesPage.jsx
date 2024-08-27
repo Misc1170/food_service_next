@@ -1,6 +1,5 @@
 import React, {useEffect, useState} from "react";
 import PageTitleName from "../components/Text/PageTitleName.jsx";
-import axios from "axios";
 import FullRoundedFrame from "../components/Frames/FullRoundedFrame.jsx";
 import {Link, Outlet, useLocation} from "react-router-dom";
 import CardTitle from "@/components/Text/CardTitle.jsx";
