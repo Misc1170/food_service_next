@@ -1,6 +1,5 @@
 'use client'
 
-import PageTitleName from "@components/Text/PageTitleName.jsx";
 import FullRoundedFrame from "@components/Frames/FullRoundedFrame.jsx";
 import CardTitle from "@components/Text/CardTitle.jsx";
 import Image from "next/image";
@@ -10,6 +9,8 @@ import DishInfoPage from "@/pages/dishesPages/DishInfoPage";
 import PriceWithRubleSymbol from "@/components/Text/PriceWithRubleSymbol";
 import AddToCartButton from "@/components/Buttons/AddToCartButton";
 import GreenButton from "@/components/Buttons/GreenButton";
+import CardSkeletons from "@/components/Skeletons/CardSkeletons";
+import CardsWrapper from "@/components/Wrappers/CardsWrapper";
 
 export default function DishesByMealType() {
     const { handleModal } = useContext(ModalContext);
@@ -26,7 +27,7 @@ export default function DishesByMealType() {
     }, [])
 
     return (
-        <div className="grid grid-cols-4 gap-3">
+        <CardsWrapper>
             {dishes.data
                 ? (dishes.data.map((dish, index) => {
                     return (
@@ -48,7 +49,7 @@ export default function DishesByMealType() {
                         </FullRoundedFrame>
                     )
                 }))
-                : (<h2>Loading...</h2>)}
-        </div>
+                : (<CardSkeletons count={20} />)}
+        </CardsWrapper>
     );
 }

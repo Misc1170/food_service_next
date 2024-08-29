@@ -9,6 +9,8 @@ import DishInfoPage from "@/pages/dishesPages/DishInfoPage";
 import PriceWithRubleSymbol from "@/components/Text/PriceWithRubleSymbol";
 import AddToCartButton from "@/components/Buttons/AddToCartButton";
 import GreenButton from "@/components/Buttons/GreenButton";
+import CardsWrapper from "@/components/Wrappers/CardsWrapper";
+import CardSkeletons from "@/components/Skeletons/CardSkeletons";
 
 export default function DishesByMealType({ params }) {
     const { handleModal } = useContext(ModalContext);
@@ -26,7 +28,7 @@ export default function DishesByMealType({ params }) {
 
     return (
         <>
-            <div className="grid grid-cols-4 gap-3">
+            <CardsWrapper>
                 {dishes.data
                     ? (dishes.data.map((dish, index) => {
                         return (
@@ -47,8 +49,8 @@ export default function DishesByMealType({ params }) {
                             </FullRoundedFrame>
                         )
                     }))
-                    : (<h2>Loading...</h2>)}
-            </div>
+                    : (<CardSkeletons count={20} />)}
+            </CardsWrapper>
         </>
     );
 }
