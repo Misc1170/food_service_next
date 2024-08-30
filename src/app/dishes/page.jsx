@@ -35,7 +35,7 @@ export default function DishesByMealType() {
                             key={index}
                             bg_color={"D9D9D9"}
                             className={"col-span-1 space-y-3"}
-                            clickHandle={() => handleModal(<DishInfoPage dishId={dish.dish_id} />)}>
+                            clickHandle={() => handleModal(<DishInfoPage dish={dish} />)}>
                             <CardTitle>{dish.name} - id {dish.dish_id}</CardTitle> {/* Удалить dish_id */}
                             <Image
                                 width={200}
@@ -45,7 +45,7 @@ export default function DishesByMealType() {
                             />
                             <PriceWithRubleSymbol>{dish.price_sell}</PriceWithRubleSymbol>
                             <AddToCartButton propItem={dish} />
-                            <GreenButton clickHandle={() => handleModal(<DishInfoPage dishId={dish.dish_id} />)}>Подробнее</GreenButton>
+                            <GreenButton clickHandle={() => handleModal(<DishInfoPage dish={dish} />)}>Подробнее</GreenButton>
                         </FullRoundedFrame>
                     )
                 }))

@@ -47,9 +47,7 @@ export default function Navbar() {
 
         <NavLinksWrapper className="flex gap-x-4">
           <Link
-            className={`navbar-link ${
-              pathName === "/dishes" ? "active" : ""
-            }`}
+            className={`navbar-link ${/dishes.*/.test(pathName) ? "active" : ""}`}
             href="/dishes"
           >
             Блюда
@@ -64,9 +62,8 @@ export default function Navbar() {
 
         <NavLinksWrapper className={"relative"}>
           <Link
-            className={`navbar-link ${
-              pathName === "/cart" ? "active" : ""
-            } relative`}
+            className={`navbar-link ${pathName === "/cart" ? "active" : ""
+              } relative`}
             href="/cart"
           >
             <Image width={50} height={50} src={cartIcon} alt="" />

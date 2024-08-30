@@ -1,24 +1,11 @@
-"use client";
+// "use client";
 
-import { useEffect, useState } from "react";
 import FullRoundedFrame from "../../components/Frames/FullRoundedFrame.jsx";
 import AddToCartButton from "../../components/Buttons/AddToCartButton.jsx";
 import PriceWithRubleSymbol from "../../components/Text/PriceWithRubleSymbol.jsx";
 import Image from "next/image.js";
 
-export default function DishInfoPage({ dishId }) {
-  const [dish, setDish] = useState([]);
-
-  const getDish = async () => {
-    const response = await fetch(`http://127.0.0.1:8000/api/dish/${dishId}`)
-    const data = await response.json();
-    console.log(data)
-    setDish(data);
-  }
-  
-  useEffect(() => {
-    getDish();
-  }, []);
+export default function DishInfoPage({ dish }) {
 
   return <>
     {dish ? (

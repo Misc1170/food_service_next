@@ -45,7 +45,7 @@ export default function DishesByMealType({ params }) {
                                 />
                                 <PriceWithRubleSymbol>{dish.price_sell}</PriceWithRubleSymbol>
                                 <AddToCartButton propItem={dish} />
-                                <GreenButton clickHandle={() => handleModal(<DishInfoPage dishId={dish.dish_id} />)}>Подробнее</GreenButton>
+                                <GreenButton clickHandle={() => handleModal(<DishInfoPage dish={dish} />)}>Подробнее</GreenButton>
                             </FullRoundedFrame>
                         )
                     }))

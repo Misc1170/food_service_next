@@ -1,20 +1,20 @@
 import { Slider, Tooltip } from "@nextui-org/react";
-import { useState } from "react";
+import { useRef, useState } from "react";
 
 export default function SetsFiltersSlider({ onChangeProp }) {
+    const inputRef = useRef()
     const [value, setValue] = useState(0);
     const [inputValue, setInputValue] = useState(0);
 
-    const handleChange = (item) => {
-        console.log(item, value)
+    const handleChange = (value) => {
         if (isNaN(Number(value))) return;
+
+        const item = inputRef;
 
         setValue(value);
         setInputValue(value.toString());
-        // onChangeProp(item)
+        onChangeProp(item)
     };
-
-
 
     return (
         <Slider
@@ -24,15 +24,14 @@ export default function SetsFiltersSlider({ onChangeProp }) {
             step={1}
             maxValue={10000}
             minValue={0}
-            color="foreground"
+            color="secondary"
             name="budget"
             classNames={{
                 base: "max-w-md",
                 label: "text-medium",
             }}
             value={value}
-            onChange={(item) => handleChange(item)}
-            // we extract the default children to render the input
+            onChange={handleChange}
             renderValue={({ children, ...props }) => (
                 <output {...props}>
                     <Tooltip
@@ -41,6 +40,7 @@ export default function SetsFiltersSlider({ onChangeProp }) {
                         placement="left"
                     >
                         <input
+                            ref={inputRef}
                             className="px-1 py-0.5 w-12 text-right text-small text-default-700 font-medium bg-default-100 outline-none transition-colors rounded-small border-medium border-transparent hover:border-4A914C focus:border-4A914C"
                             name="budget"
                             type="text"

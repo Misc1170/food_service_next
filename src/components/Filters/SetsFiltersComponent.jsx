@@ -3,8 +3,12 @@
 import { Checkbox, CheckboxGroup, Select, SelectItem } from "@nextui-org/react";
 import { useEffect, useState } from "react";
 import SetsFiltersSlider from "../Sliders/SetsFiltersSlider";
+import { usePathname, useRouter } from "next/navigation";
+import isEmpty from "@/functions/isEmpty";
 
-export default function SetsFiltersComponent({ onChange }) {
+export default function SetsFiltersComponent() {
+    const pathname = usePathname()
+    const router = useRouter()
     const [filters, setFilters] = useState({ count_meals: [] });
     const [countMeals, setCountMeals] = useState([])
     const [purposes, setPurposes] = useState([])
@@ -20,11 +24,6 @@ export default function SetsFiltersComponent({ onChange }) {
         const data = await response.json();
         setPurposes(data.result)
     }
-
-    useEffect(() => {
-        getCountMeals();
-        getPurposes();
-    }, [])
 
     const onChangeCheckbox = (item) => {
         const { name, value, checked } = item.target;
@@ -45,20 +44,35 @@ export default function SetsFiltersComponent({ onChange }) {
                 });
             }
         }
-        console.log({ value: value, 'oldValue': oldValue, 'filters': filters })
     }
 
     const onChangeOthers = (item) => {
-        const { name, value } = item.target;
-
+        const { name, value } = item.target ?? item.current;
         setFilters({ ...filters, [name]: value })
-        console.log({ value: value, 'filters': filters })
     }
+
+    const setNewUrl = () => {
+        const countMeals = filters.count_meals;
+        const purposeId = filters.purpose_id;
+        const budget = filters.budget;
+
+        if (isEmpty(countMeals) || isEmpty(purposeId) || isEmpty(budget)) {
+            alert('Выбраны не все фильтры');
+        } else {
+            const url = pathname + `?count_meals=${filters.count_meals}&purpose_id=${filters.purpose_id}&budget=${filters.budget}`;
+            router.push(url)
+        }
+    }
+
+    useEffect(() => {
+        getCountMeals();
+        getPurposes();
+    }, [])
 
     return (
         <>{countMeals && purposes
             ?
-            (<>
+            (<div>
                 <CheckboxGroup
                     label='Количество приёмов пищи в наборе'
                     orientation="horizontal"
@@ -94,7 +108,13 @@ export default function SetsFiltersComponent({ onChange }) {
                 </Select>
 
                 <SetsFiltersSlider onChangeProp={onChangeOthers} />
-            </>)
+
+                <button
+                    className="p-2 bg-F06D00 border-1"
+                    onClick={setNewUrl}>
+                    Применить фильтры
+                </button>
+            </div>)
             : <h2>Loading</h2>
         }
         </>
