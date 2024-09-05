@@ -11,24 +11,38 @@ import AddToCartButton from "@/components/Buttons/AddToCartButton";
 import GreenButton from "@/components/Buttons/GreenButton";
 import CardsWrapper from "@/components/Wrappers/CardsWrapper";
 import CardSkeletons from "@/components/Skeletons/CardSkeletons";
+import { Pagination } from "@nextui-org/react";
+import { usePathname, useRouter, useSearchParams } from "next/navigation";
 
 export default function DishesByMealType({ params }) {
     const { handleModal } = useContext(ModalContext);
+    const router = useRouter()
+    const searchParams = useSearchParams()
     const [dishes, setDishes] = useState([]);
+    const [currentPage, setCurrentPage] = useState(searchParams.get('page') || 1);
+    const pathName = usePathname();
 
     const getDishes = async () => {
-        const response = await fetch(`http://127.0.0.1:8000/api/dishes/${params.mealType}`)
+        const response = await fetch(`http://127.0.0.1:8000/api/dishes/${params.mealType}?page=${currentPage}`)
         const data = await response.json();
         setDishes(data);
     };
 
     useEffect(() => {
         getDishes();
-    }, [])
+    }, [currentPage])
 
     return (
         <>
             <CardsWrapper>
+            <Pagination total={dishes.last_page}
+                showControls
+                color={'secondary'}
+                onChange={(page) => {
+                    setCurrentPage(page)
+                    router.push(`${pathName}?page=${page}`)
+                }}
+            />
                 {dishes.data
                     ? (dishes.data.map((dish, index) => {
                         return (

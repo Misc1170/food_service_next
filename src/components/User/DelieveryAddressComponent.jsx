@@ -1,11 +1,11 @@
-// 'use client'
+'use client'
 
 import { DelieveryAddressContext } from "@/contexts/delievery";
-import GreenButton from "./Buttons/GreenButton";
+import GreenButton from "@components/Buttons/GreenButton";
 import { useContext, useEffect, useState } from "react";
 import isEmpty from "@/functions/isEmpty";
 import { ModalContext } from "@/contexts/modal";
-import DelieveryAddressForm from "./Forms/DelieveryAddressForm";
+import DelieveryAddressForm from "@components/Forms/DelieveryAddressForm";
 import { faPen } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 

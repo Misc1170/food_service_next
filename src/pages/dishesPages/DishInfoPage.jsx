@@ -49,7 +49,7 @@ export default function DishInfoPage({ dish }) {
                 <br />
               </ul>
               <strong>Вес: </strong>
-              <span>{dish.sum_weight} г.</span>
+              <span>{dish.weight} г.</span>
             </FullRoundedFrame>
             <FullRoundedFrame
               bg_color={"D9D9D9"}
@@ -61,11 +61,11 @@ export default function DishInfoPage({ dish }) {
                     "h-1 after:block after:absolute after:-inset-1 after:bg-4A914C relative inline-block"
                   }
                 >
-                  <li className={"relative"}>Ккал {dish.sum_kilocalories}</li>
+                  <li className={"relative"}>Ккал {dish.kilocalories}</li>
                 </li>
-                <li>Белки {dish.sum_proteins}</li>
-                <li>Жиры {dish.sum_fats}</li>
-                <li>Углеводы {dish.sum_carbons}</li>
+                <li>Белки {dish.proteins}</li>
+                <li>Жиры {dish.fats}</li>
+                <li>Углеводы {dish.carbons}</li>
               </ul>
             </FullRoundedFrame>
           </div>
@@ -84,6 +84,6 @@ export default function DishInfoPage({ dish }) {
         </div>
       </div>
     )
-      : <h2>Loading...</h2>};
+      : <h2>Loading...</h2>}
   </>
 }

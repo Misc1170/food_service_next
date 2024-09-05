@@ -1,24 +1,12 @@
 "use client";
 
-import { useEffect, useState } from "react";
 import FullRoundedFrame from "../../components/Frames/FullRoundedFrame.jsx";
 import AddToCartButton from "../../components/Buttons/AddToCartButton.jsx";
 import PriceWithRubleSymbol from "../../components/Text/PriceWithRubleSymbol.jsx";
 import Image from "next/image.js";
+import GreenButton from "../Buttons/GreenButton.jsx";
 
-export default function SetInfoComponent({ setId }) {
-    const [set, setSet] = useState([]);
-
-    const getSet = async () => {
-        const response = await fetch(`http://127.0.0.1:8000/api/set/${setId}`)
-        const data = await response.json();
-        setSet(data);
-    }
-
-    useEffect(() => {
-        getSet();
-    }, []);
-
+export default function SetInfoComponent({ set }) {
     return <>
         {set ? (
             <div className={"grid grid-cols-2 gap-x-12"}>
@@ -49,11 +37,11 @@ export default function SetInfoComponent({ setId }) {
                                 role="list"
                                 className={"marker:text-sky-400 list-disc pl-5 space-y-1"}
                             >
-                                <strong>Состав: </strong>
+                                <strong>Из чего состоит сет: </strong>
                                 {set.dishes?.map((dish, index) => {
                                     return (
                                         <li key={index} className={"lowercase"}>
-                                            {dish.name}
+                                            {dish.meal_type.name}: {dish.name}
                                         </li>
                                     );
                                 })}
@@ -91,11 +79,11 @@ export default function SetInfoComponent({ setId }) {
                     </div>
                     <div className={"flex justify-between"}>
                         <PriceWithRubleSymbol>{set.price_sell}</PriceWithRubleSymbol>
-                        <AddToCartButton propItem={set} />
+                        <GreenButton clickHandle={() => alert("Уйди")}>Маленькая кнопка замены сета?&#9998;</GreenButton>
                     </div>
                 </div>
             </div>
         )
-            : <h2>Loading...</h2>};
+            : <h2>Loading...</h2>}
     </>
 }

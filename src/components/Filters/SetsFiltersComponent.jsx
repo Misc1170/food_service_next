@@ -1,49 +1,27 @@
 'use client'
 
-import { Checkbox, CheckboxGroup, Select, SelectItem } from "@nextui-org/react";
-import { useEffect, useState } from "react";
+import { Input, Select, SelectItem } from "@nextui-org/react";
+import { useEffect, useRef, useState } from "react";
 import SetsFiltersSlider from "../Sliders/SetsFiltersSlider";
-import { usePathname, useRouter } from "next/navigation";
+import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import isEmpty from "@/functions/isEmpty";
 
 export default function SetsFiltersComponent() {
+    const searchParams = useSearchParams()
     const pathname = usePathname()
     const router = useRouter()
-    const [filters, setFilters] = useState({ count_meals: [] });
-    const [countMeals, setCountMeals] = useState([])
+    const [filters, setFilters] = useState({
+        count_sets: searchParams.get('count_sets'),
+        purpose_id: searchParams.get('purpose_id'),
+        kcal: searchParams.get('kcal')
+    });
     const [purposes, setPurposes] = useState([])
-
-    const getCountMeals = async () => {
-        const response = await fetch('http://127.0.0.1:8000/api/sets/count-meals');
-        const data = await response.json();
-        setCountMeals(data)
-    }
+    const inputRef = useRef();
 
     const getPurposes = async () => {
         const response = await fetch('http://127.0.0.1:8000/api/purposes');
         const data = await response.json();
         setPurposes(data.result)
-    }
-
-    const onChangeCheckbox = (item) => {
-        const { name, value, checked } = item.target;
-        const oldValue = filters[name];
-
-        if (checked) {
-            if (name === 'count_meals') {
-                setFilters({ ...filters, [name]: [...oldValue, value] })
-            } else {
-                setFilters({ ...filters, [name]: value })
-            }
-        } else {
-            if (name === 'count_meals') {
-                setFilters({
-                    ...filters, [name]: oldValue.filter(
-                        (e) => e != value
-                    ),
-                });
-            }
-        }
     }
 
     const onChangeOthers = (item) => {
@@ -52,52 +30,33 @@ export default function SetsFiltersComponent() {
     }
 
     const setNewUrl = () => {
-        const countMeals = filters.count_meals;
+        const countSets = filters.count_sets;
         const purposeId = filters.purpose_id;
-        const budget = filters.budget;
+        const kcal = filters.kcal;
 
-        if (isEmpty(countMeals) || isEmpty(purposeId) || isEmpty(budget)) {
+        if (isEmpty(countSets) || isEmpty(purposeId) || isEmpty(kcal)) {
             alert('Выбраны не все фильтры');
         } else {
-            const url = pathname + `?count_meals=${filters.count_meals}&purpose_id=${filters.purpose_id}&budget=${filters.budget}`;
+            const url = pathname + `?count_sets=${filters.count_sets}&purpose_id=${filters.purpose_id}&kcal=${filters.kcal}`;
             router.push(url)
         }
     }
 
     useEffect(() => {
-        getCountMeals();
         getPurposes();
     }, [])
 
     return (
-        <>{countMeals && purposes
+        <>{purposes
             ?
             (<div>
-                <CheckboxGroup
-                    label='Количество приёмов пищи в наборе'
-                    orientation="horizontal"
-                    name="count_meals"
-                    color="secondary"
-                    defaultValue={["buenos-aires", "san-francisco"]}
-                >
-                    {countMeals.map((count, index) => {
-                        return (
-                            <Checkbox key={index}
-                                name="count_meals"
-                                value={count}
-                                onChange={(item) => onChangeCheckbox(item)}
-                            >
-                                {count}
-                            </Checkbox>
-                        )
-                    })
-                    }
-                </CheckboxGroup>
-
                 <Select
                     label="Набор для какой цели"
+                    labelPlacement="outside"
                     className="max-w-xs"
+                    defaultSelectedKeys={filters.purpose_id}
                     name="purpose_id"
+                    color="warning"
                     onChange={(item) => onChangeOthers(item)}
                 >
                     {purposes.map((purpose) => {
@@ -107,7 +66,21 @@ export default function SetsFiltersComponent() {
                     })}
                 </Select>
 
-                <SetsFiltersSlider onChangeProp={onChangeOthers} />
+                <SetsFiltersSlider onChangeProp={onChangeOthers} defaultValue={filters.kcal} />
+
+                <Input
+                    label="Количество сетов (дней)"
+                    name="count_sets"
+                    variant="bordered"
+                    placeholder="0"
+                    type={"number"}
+                    color="secondary"
+                    isRequired={true}
+                    className="max-w-xs"
+                    onChange={(inputRef) => onChangeOthers(inputRef)}
+                    ref={inputRef}
+                    defaultValue={filters.count_sets}
+                />
 
                 <button
                     className="p-2 bg-F06D00 border-1"

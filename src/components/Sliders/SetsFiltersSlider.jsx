@@ -1,16 +1,16 @@
 import { Slider, Tooltip } from "@nextui-org/react";
 import { useRef, useState } from "react";
 
-export default function SetsFiltersSlider({ onChangeProp }) {
+export default function SetsFiltersSlider({ onChangeProp, defaultValue}) {
     const inputRef = useRef()
-    const [value, setValue] = useState(0);
-    const [inputValue, setInputValue] = useState(0);
+    const [value, setValue] = useState(defaultValue ?? 0);
+    const [inputValue, setInputValue] = useState(defaultValue ?? 0);
 
     const handleChange = (value) => {
         if (isNaN(Number(value))) return;
-
+        
         const item = inputRef;
-
+        
         setValue(value);
         setInputValue(value.toString());
         onChangeProp(item)
@@ -18,14 +18,14 @@ export default function SetsFiltersSlider({ onChangeProp }) {
 
     return (
         <Slider
-            id="budget"
-            label="Бюджет в день на еду"
+            id="kcal"
+            label="Количество Ккал в день"
             size="sm"
             step={1}
-            maxValue={10000}
+            maxValue={4000}
             minValue={0}
             color="secondary"
-            name="budget"
+            name="kcal"
             classNames={{
                 base: "max-w-md",
                 label: "text-medium",
@@ -42,11 +42,11 @@ export default function SetsFiltersSlider({ onChangeProp }) {
                         <input
                             ref={inputRef}
                             className="px-1 py-0.5 w-12 text-right text-small text-default-700 font-medium bg-default-100 outline-none transition-colors rounded-small border-medium border-transparent hover:border-4A914C focus:border-4A914C"
-                            name="budget"
+                            name="kcal"
                             type="text"
-                            aria-label="budget value"
+                            aria-label="kcal value"
+                            max={4000}
                             value={inputValue}
-                            max={10000}
                             onChange={(item) => {
                                 setInputValue(item.target.value)
                                 onChangeProp(item)
@@ -58,6 +58,7 @@ export default function SetsFiltersSlider({ onChangeProp }) {
                             }}
                         />
                     </Tooltip>
+                    <span>Ккал</span>
                 </output>
             )}
         />

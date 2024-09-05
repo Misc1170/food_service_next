@@ -25,6 +25,7 @@ export const CartProvider = ({ children }) => {
   }, [cartItems]);
 
   const addToCart = (item) => {
+    console.log(item)
     const isItemInCart = cartItems.find(
       (cartItem) => cartItem.dish_id === item.dish_id
     );
