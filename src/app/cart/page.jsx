@@ -20,7 +20,6 @@ export default function CartPage() {
         <>
           <OrderContents
             orderItems={cartItems}
-            totalPrice={getCartTotal()}
             isClearOrder={true}
             isChangeQuantityItem={true} />
         </>

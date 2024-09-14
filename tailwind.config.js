@@ -26,6 +26,10 @@ module.exports = {
       ECECEC: "#ECECEC",
       EEC7A6: "#EEC7A6",
       "6ED0F6": "#6ED0F6",
+      'amber': {
+        300: '#fcd34d'
+      },
+      "6ED0F6": "#6ED0F6",
     },
   },
   plugins: [nextui({

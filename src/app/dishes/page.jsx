@@ -1,11 +1,10 @@
 'use client'
 
-import FullRoundedFrame from "@components/Frames/FullRoundedFrame.jsx";
+import FullRoundedFrame from "@/components/Frames/FullRoundedFrame.jsx";
 import CardTitle from "@components/Text/CardTitle.jsx";
 import Image from "next/image";
-import { useContext, useEffect, useRef, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { ModalContext } from "@/contexts/modal";
-import DishInfoPage from "@/pages/dishesPages/DishInfoPage";
 import PriceWithRubleSymbol from "@/components/Text/PriceWithRubleSymbol";
 import AddToCartButton from "@/components/Buttons/AddToCartButton";
 import GreenButton from "@/components/Buttons/GreenButton";
@@ -13,6 +12,7 @@ import CardSkeletons from "@/components/Skeletons/CardSkeletons";
 import CardsWrapper from "@/components/Wrappers/CardsWrapper";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { Pagination } from "@nextui-org/react";
+import DishInfoComponent from "@/components/Cards/dishes/DishInfoComponent";
 
 export default function DishesByMealType() {
     const { handleModal } = useContext(ModalContext);
@@ -26,13 +26,12 @@ export default function DishesByMealType() {
         const initialMealTypes = 'breakfast,lunch,dinner'
         const response = await fetch(`http://127.0.0.1:8000/api/dishes/${initialMealTypes}?page=${currentPage}`)
         const data = await response.json();
-        console.log(data)
         setDishes(data);
     };
 
     useEffect(() => {
         getDishes()
-    }, [currentPage])
+    }, [])
 
     return (
         <CardsWrapper>
@@ -52,7 +51,7 @@ export default function DishesByMealType() {
                                 key={index}
                                 bg_color={"D9D9D9"}
                                 className={"col-span-1 space-y-3"}
-                                clickHandle={() => handleModal(<DishInfoPage dish={dish} />)}>
+                                clickHandle={() => handleModal(<DishInfoComponent dish={dish} />)}>
                                 <CardTitle>{dish.name} - id {dish.dish_id}</CardTitle> {/* Удалить dish_id */}
                                 <Image
                                     width={200}
@@ -62,7 +61,7 @@ export default function DishesByMealType() {
                                 />
                                 <PriceWithRubleSymbol>{dish.price_sell}</PriceWithRubleSymbol>
                                 <AddToCartButton propItem={dish} />
-                                <GreenButton clickHandle={() => handleModal(<DishInfoPage dish={dish} />)}>Подробнее</GreenButton>
+                                <GreenButton clickHandle={() => handleModal(<DishInfoComponent dish={dish} />)}>Подробнее</GreenButton>
                             </FullRoundedFrame>
                         </>
                     )

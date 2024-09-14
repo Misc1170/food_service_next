@@ -5,8 +5,8 @@ import CardTitle from "@components/Text/CardTitle.jsx";
 import Image from "next/image";
 import { useContext, useEffect, useState } from "react";
 import { ModalContext } from "@/contexts/modal";
-import DishInfoPage from "@/pages/dishesPages/DishInfoPage";
-import PriceWithRubleSymbol from "@/components/Text/PriceWithRubleSymbol";
+import DishInfoComponent from "@/components/Cards/dishes/DishInfoComponent";
+import PriceWithRubleSymbol from "@/components/Text/PriceWithRubleSymbol";  
 import AddToCartButton from "@/components/Buttons/AddToCartButton";
 import GreenButton from "@/components/Buttons/GreenButton";
 import CardsWrapper from "@/components/Wrappers/CardsWrapper";
@@ -59,7 +59,7 @@ export default function DishesByMealType({ params }) {
                                 />
                                 <PriceWithRubleSymbol>{dish.price_sell}</PriceWithRubleSymbol>
                                 <AddToCartButton propItem={dish} />
-                                <GreenButton clickHandle={() => handleModal(<DishInfoPage dish={dish} />)}>Подробнее</GreenButton>
+                                <GreenButton clickHandle={() => handleModal(<DishInfoComponent dish={dish} />)}>Подробнее</GreenButton>
                             </FullRoundedFrame>
                         )
                     }))
