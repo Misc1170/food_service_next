@@ -17,7 +17,6 @@ export default function OrderContents({
   isClearOrder,
   isChangeQuantityItem,
 }) {
-  const { totalPrice, setTotalPrice } = useState(0);
   const {
     addToCart,
     decreaseQuantity,
@@ -25,6 +24,8 @@ export default function OrderContents({
     removeFromCart,
     getCartTotal,
   } = useContext(CartContext);
+
+  let totalPrice = 0;
 
   return (
     <>
@@ -42,10 +43,10 @@ export default function OrderContents({
           </button>
         )}
       </div>
-      <div className={"space-y-5"}>
+      <div className={"space-y-5 max-h-96"}>
         {orderItems.map((orderItem, index) => {
           const itemQuantity = orderItem.quantity ?? 1;
-          setTotalPrice(totalPrice + orderItem.price_sell);
+          totalPrice += Number(orderItem.price_sell * itemQuantity);
           return (
             <div
               key={index}
@@ -85,12 +86,12 @@ export default function OrderContents({
                     <span>{orderItem.quantity}</span>
                     <button onClick={() => addToCart(orderItem)}>+</button>
                   </div>
+                  <button onClick={() => removeFromCart(orderItem)}>&#10060;</button>
                 </div>
               )}
               <PriceWithRubleSymbol>
                 {orderItem.price_sell * itemQuantity}
               </PriceWithRubleSymbol>
-              {/*<FcCancel className={"cursor-pointer"} onClick={() => removeFromCart()}/>*/}
             </div>
           );
         })}
@@ -99,7 +100,7 @@ export default function OrderContents({
         <SpanXxl>Итого: </SpanXxl>
         <PriceWithRubleSymbol>{totalPrice}</PriceWithRubleSymbol>
       </div>
-      <PayButton />
+      <PayButton orderItems={orderItems} />
     </>
   );
 }

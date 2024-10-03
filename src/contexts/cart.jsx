@@ -24,13 +24,16 @@ export const CartProvider = ({ children }) => {
     localStorage.setItem("cartItems", JSON.stringify(cartItems));
   }, [cartItems]);
 
-  const addToCart = (item) => {
-    console.log(item)
+  const isItemInCart = (item) => {
     const isItemInCart = cartItems.find(
       (cartItem) => cartItem.dish_id === item.dish_id
     );
 
-    if (isItemInCart) {
+    return isItemInCart; // Поменять возврат объекта на тру фолсе
+  }
+
+  const addToCart = (item) => {
+    if (isItemInCart(item)) {
       setCartItems(
         cartItems.map((cartItem) =>
           cartItem.dish_id === item.dish_id
@@ -44,26 +47,19 @@ export const CartProvider = ({ children }) => {
   };
 
   const removeFromCart = (item) => {
-    const isItemInCart = cartItems.find(
-      (cartItem) => cartItem.dish_id === item.dish_id
-    );
-
-    if (isItemInCart) {
-      cartItems.map((cartItem) => {
-        cartItem.dish_id = item.dish_id ? cartItems.removeItem() : cartItem;
-      });
+    if (isItemInCart(item)) {
+      setCartItems(
+        cartItems.filter((cartItem) => cartItem.dish_id !== item.dish_id)
+      );
     }
-    setCartItems(cartItems.remove);
   };
 
   const decreaseQuantity = (item) => {
-    const isItemInCart = cartItems.find(
-      (cartItem) => cartItem.dish_id === item.dish_id
-    );
+    const isItemInCart = isItemInCart(item);
 
     if (isItemInCart.quantity === 1) {
       setCartItems(
-        cartItems.filter((cartItem) => cartItem.dish_id === item.dish_id)
+        cartItems.filter((cartItem) => cartItem.dish_id !== item.dish_id)
       );
     } else {
       setCartItems(
@@ -100,7 +96,8 @@ export const CartProvider = ({ children }) => {
         decreaseQuantity,
         clearCart,
         getCartTotal,
-        getCartItems
+        getCartItems,
+        isItemInCart
       }}
     >
       {children}

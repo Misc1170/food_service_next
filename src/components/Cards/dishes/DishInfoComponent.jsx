@@ -1,11 +1,18 @@
-// "use client";
+"use client";
 
 import FullRoundedFrame from "@components/Frames/FullRoundedFrame.jsx";
 import AddToCartButton from "@components/Buttons/AddToCartButton.jsx";
 import PriceWithRubleSymbol from "@components/Text/PriceWithRubleSymbol.jsx";
 import Image from "next/image.js";
+import GreenButton from "@/components/Buttons/GreenButton";
+import InBasketGreenButton from "@/components/Buttons/InBasketGreenButton";
+import { useEffect } from "react";
 
-export default function DishInfoComponent({ dish }) {
+export default function DishInfoComponent({ dish, isInBasketExists = false }) {
+  console.log('isInBasketExists DishInfoComponent', isInBasketExists)
+  useEffect(() => {
+  }, [])
+
   return (
     <>
       {dish ? (
@@ -25,7 +32,7 @@ export default function DishInfoComponent({ dish }) {
             </div>
           </div>
 
-          <div className={"col-span-1 flex flex-col gap-y-6 justify-center"}>
+          <div className={"col-span-1 flex flex-col gap-y-6 justify-between"}>
             <h2>{dish.name}</h2>
             <div className={"grid grid-cols-2 gap-x-10"}>
               <FullRoundedFrame
@@ -69,17 +76,12 @@ export default function DishInfoComponent({ dish }) {
                 </ul>
               </FullRoundedFrame>
             </div>
-            <div className={"border-5 border-D9D9D9 rounded-2xl p-6"}>
-              <h4 className={"mb-3"}>Полезные элементы</h4>
-              <span>
-                За кого же нам, батюшка, посвататься? А вы возьмите по стреле,
-                натяните свои тугие луки и пустите стрелы в разные стороны. Где
-                стрела упадет — там и сватайтесь.
-              </span>
-            </div>
             <div className={"flex justify-between"}>
               <PriceWithRubleSymbol>{dish.price_sell}</PriceWithRubleSymbol>
-              <AddToCartButton propItem={dish} />
+              {isInBasketExists
+                ? <InBasketGreenButton />
+                : <AddToCartButton propItem={dish} />
+              }
             </div>
           </div>
         </div>

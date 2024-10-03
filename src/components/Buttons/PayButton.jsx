@@ -4,20 +4,17 @@ import { useContext } from "react";
 import DelieveryAddressForm from "../Forms/DelieveryAddressForm.jsx";
 import GreenButton from "./GreenButton.jsx";
 import { DelieveryAddressContext } from "@/contexts/delievery.jsx";
-import { CartContext } from "@/contexts/cart.jsx";
 import { ModalContext } from "@/contexts/modal.jsx";
 import isEmpty from "@/functions/isEmpty.jsx";
 
-export default function PayButton() {
+export default function PayButton({orderItems}) {
   const {getDelieveryAddress} = useContext(DelieveryAddressContext);
-  const {getCartItems} = useContext(CartContext)
   const {handleModal} = useContext(ModalContext)
 
   const payOrder = () => {
     const delieveryAddress = getDelieveryAddress();
-    const cartItems = getCartItems();
 
-    if (isEmpty(cartItems)) {
+    if (isEmpty(orderItems)) {
       alert('empty cart')
     }
 
@@ -25,7 +22,7 @@ export default function PayButton() {
       handleModal(<DelieveryAddressForm />)
     }
 
-    console.log(['delieveryAddress', delieveryAddress, 'cartItems', cartItems])
+    console.log(['delieveryAddress', delieveryAddress, 'orderItems', orderItems])
   };
 
   return <GreenButton clickHandle={() => payOrder()}>Оплатить</GreenButton>;

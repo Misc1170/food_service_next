@@ -45,7 +45,7 @@ export default function SetInfoComponent({ set }) {
 
           <div className={"col-span-1 flex flex-col gap-y-6 bg-amber-300"}>
             <strong>Из чего состоит сет: </strong>
-            <ul role="list" className={"marker:text-sky-400 space-y-1"}>
+            <ul key={0} role="list" className={"marker:text-sky-400 space-y-1"}>
               {set.dishes?.map((dish, index) => {
                 return (
                   <>

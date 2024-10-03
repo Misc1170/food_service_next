@@ -33,7 +33,7 @@ export default function DishesList({ children }) {
         })
           : ''}
         <Link href={'/dishes'}>
-          <GreenButton isActive={pathName == '/dishes'}>Все типы приёмов пищи</GreenButton>
+          <GreenButton isActive={pathName == '/dishes/breakfast,lunch,dinner'}>Все типы приёмов пищи</GreenButton>
         </Link>
       </div>
       <div className={"py-10"}>

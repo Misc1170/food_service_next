@@ -6,16 +6,19 @@ import Image from "next/image";
 import { useContext, useEffect, useState } from "react";
 import { ModalContext } from "@/contexts/modal";
 import DishInfoComponent from "@/components/Cards/dishes/DishInfoComponent";
-import PriceWithRubleSymbol from "@/components/Text/PriceWithRubleSymbol";  
+import PriceWithRubleSymbol from "@/components/Text/PriceWithRubleSymbol";
 import AddToCartButton from "@/components/Buttons/AddToCartButton";
 import GreenButton from "@/components/Buttons/GreenButton";
 import CardsWrapper from "@/components/Wrappers/CardsWrapper";
 import CardSkeletons from "@/components/Skeletons/CardSkeletons";
 import { Pagination } from "@nextui-org/react";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
+import InBasketGreenButton from "@/components/Buttons/InBasketGreenButton";
+import { CartContext } from "@/contexts/cart";
 
 export default function DishesByMealType({ params }) {
     const { handleModal } = useContext(ModalContext);
+    const { isItemInCart } = useContext(CartContext);
     const router = useRouter()
     const searchParams = useSearchParams()
     const [dishes, setDishes] = useState([]);
@@ -35,16 +38,18 @@ export default function DishesByMealType({ params }) {
     return (
         <>
             <CardsWrapper>
-            <Pagination total={dishes.last_page}
-                showControls
-                color={'secondary'}
-                onChange={(page) => {
-                    setCurrentPage(page)
-                    router.push(`${pathName}?page=${page}`)
-                }}
-            />
+                <Pagination total={dishes.last_page}
+                    showControls
+                    color={'secondary'}
+                    onChange={(page) => {
+                        setCurrentPage(page)
+                        router.push(`${pathName}?page=${page}`)
+                    }}
+                />
                 {dishes.data
                     ? (dishes.data.map((dish, index) => {
+                        const isInBasketExists = isItemInCart(dish);
+                        console.log('isInBasketExists mealType', isInBasketExists)
                         return (
                             <FullRoundedFrame
                                 key={index}
@@ -58,8 +63,11 @@ export default function DishesByMealType({ params }) {
                                     alt=""
                                 />
                                 <PriceWithRubleSymbol>{dish.price_sell}</PriceWithRubleSymbol>
-                                <AddToCartButton propItem={dish} />
-                                <GreenButton clickHandle={() => handleModal(<DishInfoComponent dish={dish} />)}>Подробнее</GreenButton>
+                                {isInBasketExists
+                                    ? <InBasketGreenButton />
+                                    : <AddToCartButton propItem={dish} />
+                                }
+                                <GreenButton clickHandle={() => handleModal(<DishInfoComponent dish={dish} isInBasketExists={isInBasketExists} />)}>Подробнее</GreenButton>
                             </FullRoundedFrame>
                         )
                     }))

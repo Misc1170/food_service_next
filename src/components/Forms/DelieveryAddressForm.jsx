@@ -12,7 +12,6 @@ export default function DelieveryAddressForm({delieveryAddress}) {
     const inputRef = useMask({ mask: '+7 ___-___-__-__', replacement: { _: /\d/ }, showMask: true });
 
     const inputHandleChange = (item) => {
-        console.log(item)
         const name = item.name;
         const value = item.value;
         setFormData({ ...formData, [name]: value })
@@ -20,7 +19,6 @@ export default function DelieveryAddressForm({delieveryAddress}) {
 
     const formHandleSubmit = (form) => {
         form.preventDefault();
-        console.log('formHandleSubmit', formData)
         set(formData);
 
         // form.close();

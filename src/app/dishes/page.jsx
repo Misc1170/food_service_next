@@ -13,9 +13,13 @@ import CardsWrapper from "@/components/Wrappers/CardsWrapper";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { Pagination } from "@nextui-org/react";
 import DishInfoComponent from "@/components/Cards/dishes/DishInfoComponent";
+import { CartContext } from "@/contexts/cart";
+import InBasketGreenButton from "@/components/Buttons/InBasketGreenButton";
 
 export default function DishesByMealType() {
     const { handleModal } = useContext(ModalContext);
+    const { isItemInCart } = useContext(CartContext);
+    // const [isInBasketExists, setIsInBasketExists] = useState(false);
     const router = useRouter()
     const searchParams = useSearchParams()
     const [dishes, setDishes] = useState([]);
@@ -38,13 +42,16 @@ export default function DishesByMealType() {
             <Pagination total={dishes.last_page}
                 showControls
                 color={'secondary'}
+                defaultValue={2}
                 onChange={(page) => {
                     setCurrentPage(page)
-                    router.push(`${pathName}?page=${page}`)
+                    router.push(`${pathName}/breakfast,lunch,dinner?page=${page}`)
                 }}
             />
             {dishes.data
                 ? (dishes.data.map((dish, index) => {
+                    const isInBasketExists = isItemInCart(dish);
+                    console.log('isInBasketExists dishes', isInBasketExists)
                     return (
                         <>
                             <FullRoundedFrame
@@ -60,8 +67,11 @@ export default function DishesByMealType() {
                                     alt=""
                                 />
                                 <PriceWithRubleSymbol>{dish.price_sell}</PriceWithRubleSymbol>
-                                <AddToCartButton propItem={dish} />
-                                <GreenButton clickHandle={() => handleModal(<DishInfoComponent dish={dish} />)}>Подробнее</GreenButton>
+                                {isInBasketExists
+                                    ? <InBasketGreenButton />
+                                    : <AddToCartButton propItem={dish} />
+                                }
+                                <GreenButton clickHandle={() => handleModal(<DishInfoComponent dish={dish} isInBasketExists={isInBasketExists} />)}>Подробнее</GreenButton>
                             </FullRoundedFrame>
                         </>
                     )

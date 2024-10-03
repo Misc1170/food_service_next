@@ -58,6 +58,12 @@ export default function Navbar() {
           >
             Наборы готовых блюд
           </Link>
+          <Link
+            className={`navbar-link ${pathName === "/condition-delievery" ? "active" : ""}`}
+            href="/condition-delievery"
+          >
+            Условия доставки
+          </Link>
         </NavLinksWrapper>
 
         <NavLinksWrapper className={"relative"}>

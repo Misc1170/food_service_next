@@ -121,3 +121,11 @@ input[type=number] {
     border: 2px solid white;
     border-radius: 30px;
 }
+
+.disabled-green-button {
+    background: white;
+    border: 2px #4A914C solid;
+    border-radius: 20px;
+    padding: 10px 30px;
+    width: 75%;
+}

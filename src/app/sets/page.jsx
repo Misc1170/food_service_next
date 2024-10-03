@@ -9,15 +9,12 @@ import PageTitleName from "@/components/Text/PageTitleName";
 import CardsWrapper from "@/components/Wrappers/CardsWrapper";
 import { ModalContext } from "@/contexts/modal";
 import isEmpty from "@/functions/isEmpty";
-import { useSearchParams } from "next/navigation";
 import { useContext, useEffect, useState } from "react";
 import RegistrationInput from "@/components/Inputs/RegistrationInput";
-import { Select, SelectItem } from "@nextui-org/react";
 
 export default function SetsPage() {
   const [purposes, setPurposes] = useState([]);
-  const [formData, setFormData] = useState({});
-  const searchParams = useSearchParams();
+  const [formData, setFormData] = useState({ purpose_id: 1, physical_activity_coefficient: 1.2 });
   const [sets, setSets] = useState();
   const { handleModal } = useContext(ModalContext);
 
@@ -36,11 +33,16 @@ export default function SetsPage() {
 
   const getSets = async () => {
     const response = await fetch(`http://127.0.0.1:8000/api/sets`, {
-      method: 'post',
-      body: formData,
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'Access-Control-Allow-Origin': 'http://127.0.0.1:8000'
+      },
+      body: JSON.stringify(formData),
     });
     const data = await response.json();
     setSets(data);
+    localStorage.setItem('sets', JSON.stringify(data));
   };
 
   const getPurposes = async () => {
@@ -54,11 +56,6 @@ export default function SetsPage() {
     console.log("getPurposes");
   }, []);
 
-  useEffect(() => {
-    getSets();
-    console.log("main use effect");
-  }, [sets]);
-
   return (
     <>
       <PageTitleName>Наборы готовых блюд</PageTitleName>
@@ -69,21 +66,26 @@ export default function SetsPage() {
         onSubmit={formHandleSubmit}
         className={"space-y-4"}
       >
-        <PageTitleName>Введите данные для расчета калоража</PageTitleName>
-        <Select
-          label="Набор для какой цели"
-          labelPlacement="outside"
-          className="max-w-xs"
-          name="purpose_id"
-          color="warning"
-          onChange={(item) => onChangeOthers(item)}
-        >
-          {purposes.map((purpose) => {
-            return (
-              <SelectItem key={purpose.purpose_id}>{purpose.name}</SelectItem>
-            );
-          })}
-        </Select>
+        <h4>Введите данные для расчета калоража</h4>
+        <label htmlFor="purpose_id">
+          Выберите цель питания
+          <select
+            name="purpose_id"
+            id="purpose_id"
+            onChange={(item) => {
+              setFormData({
+                ...formData,
+                [item.target.name]: item.target.value,
+              });
+            }}
+          >
+            {
+              purposes.map((purpose, index) => {
+                return <option key={index} value={purpose.purpose_id}>{purpose.name}</option>
+              })
+            }
+          </select>
+        </label>
         <div className={"flex flex-col gap-y-10 items-center"}>
           <RegistrationInput
             inputName={"age"}
@@ -139,14 +141,40 @@ export default function SetsPage() {
                 }}
               />
             </label>
+
+            <RegistrationInput
+              inputName={"count_sets"}
+              type={"number"}
+              min={0}
+              onChange={saveInputValue}
+            >
+              Количество сетов (дней)
+            </RegistrationInput>
+
+            <label htmlFor="physical_activity_coefficient">Коэффициент физической активности
+              <select
+                id="physical_activity_coefficient"
+                name="physical_activity_coefficient"
+                onChange={(item) => {
+                  setFormData({
+                    ...formData,
+                    [item.target.name]: item.target.value,
+                  });
+                }}
+              >
+                <option value="1.2">Минимальный (сидячая работа, отсутствие физических нагрузок)</option>
+                <option value="1.375">низкий (тренировки не менее 20 мин 1-3 раза в неделю)</option>
+                <option value="1.55">умеренный (тренировки 30-60 мин 3-4 раза в неделю)</option>
+                <option value="1.7">высокий (тренировки 30-60 мин 5-7 раза в неделю; тяжелая физическая работа)</option>
+                <option value="1.9">экстремальный (несколько интенсивных тренировок в день 6-7 раз в неделю; очень трудоемкая работа)</option>
+              </select>
+            </label>
           </div>
         </div>
         <div className={"flex justify-center"}>
           <GreenButton>Подобрать наборы</GreenButton>
         </div>
-      </form>
-
-      {/* <SetsFiltersComponent /> */}
+      </form >
 
       <CardsWrapper>
         {sets ? (
@@ -171,9 +199,9 @@ export default function SetsPage() {
             })}
           </>
         ) : (
-          <>
+          <>Input
             <h1>Примени фильтры</h1>
-            <CardSkeletons count={searchParams.get("count_sets")} />
+            {/* <CardSkeletons count={searchParams.get("count_sets")} /> */}
           </>
         )}
       </CardsWrapper>
